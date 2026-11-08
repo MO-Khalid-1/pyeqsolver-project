@@ -13,7 +13,9 @@ and writes the solution, or the error, to a JSON file.
 
 From the project folder:
 
-    py main.py
+    python main.py
+
+On Windows you can also use `py main.py`.
 
 It reads `data/input_equations.txt` and writes `data/solution.json`.
 The program exits with status `0` on success and `1` on any error.

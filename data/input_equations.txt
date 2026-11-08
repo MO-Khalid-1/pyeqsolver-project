@@ -1,6 +1,3 @@
-# Sample Equations
-
-10x1 + 5x2 = 5
-
-4x2 + 3x3 = 10
-x1 + 6x3 = 12
+x + y + z = 6
+2y+5z=-4
+2*x + 5y - z = 27
