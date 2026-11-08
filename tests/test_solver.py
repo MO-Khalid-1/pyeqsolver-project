@@ -19,12 +19,12 @@ class TestSolverUniqueSolution(unittest.TestCase):
     def test_case_1(self):
         matrix = [[10, 5, 0, 5], [0, 4, 3, 10], [1, 0, 6, 12]]
         self.assert_solution(matrix, ["x1", "x2", "x3"],
-                            {"x1": 0, "x2": 1, "x3": 2})
+                             {"x1": 0, "x2": 1, "x3": 2})
 
     def test_case_2_needs_row_swap(self):
         matrix = [[1, 1, 1, 6], [1, 1, 2, 9], [1, 2, 1, 8]]
         self.assert_solution(matrix, ["x", "y", "z"],
-                            {"x": 1, "y": 2, "z": 3})
+                             {"x": 1, "y": 2, "z": 3})
 
     def test_case_3_decimals(self):
         matrix = [[0.5, 1.5, 3.5], [2, -1, 0]]
@@ -45,6 +45,13 @@ class TestSolverUniqueSolution(unittest.TestCase):
         copy = [row[:] for row in matrix]
         GaussianSolver(matrix, ["x", "y", "z"]).solve()
         self.assertEqual(matrix, copy)
+
+    def test_metadata(self):
+        solver = GaussianSolver([[1, 1, 3], [1, -1, 1], [2, 2, 6]], ["x", "y"])
+        self.assertEqual(
+            solver.get_metadata(),
+            {"num_variables": 2, "num_equations": 3},
+        )
 
 
 class TestSolverErrors(unittest.TestCase):

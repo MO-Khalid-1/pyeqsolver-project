@@ -42,6 +42,13 @@ class GaussianSolver:
         values = self._back_substitute()
         return dict(zip(self.variables, values))
 
+    def get_metadata(self) -> dict:
+        """Return the number of variables and equations."""
+        return {
+            "num_variables": self.num_variables,
+            "num_equations": self.num_equations,
+        }
+
     def _forward_eliminate(self) -> int:
         """Make zeros below every pivot and return the rank."""
         pivot_row = 0
@@ -57,7 +64,7 @@ class GaussianSolver:
                     break
 
             if found is None:
-                continue 
+                continue
 
             # Row swap (mandatory pivoting).
             if found != pivot_row:
@@ -71,7 +78,7 @@ class GaussianSolver:
                 factor = self.matrix[row][col] / pivot
                 if factor == 0:
                     continue
-                   # R2 = R2 - factor * R1, including the constant
+                # R2 = R2 - factor * R1, including the constant
                 for j in range(col, self.num_variables + 1):
                     self.matrix[row][j] -= factor * self.matrix[pivot_row][j]
 
