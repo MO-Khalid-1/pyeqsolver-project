@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1280" height="460" viewBox="0 0 1280 460">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="460" rx="18" fill="url(#bg)"/>
+  <!-- subtle grid -->
+  <g stroke="#ffffff" stroke-opacity="0.04">
+    <path d="M0 115 H1280 M0 230 H1280 M0 345 H1280 M320 0 V460 M640 0 V460 M960 0 V460"/>
+  </g>
+
+  <!-- title -->
+  <text x="48" y="92" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="56" font-weight="700" fill="#f8fafc">PyEqSolver</text>
+  <text x="50" y="132" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="22" fill="#cbd5e1">Solve systems of linear equations with Gaussian Elimination, in pure Python</text>
+
+  <!-- chips -->
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="15" fill="#e2e8f0">
+    <rect x="50" y="152" width="190" height="30" rx="15" fill="#38bdf8" fill-opacity="0.15" stroke="#38bdf8" stroke-opacity="0.5"/>
+    <text x="145" y="172" text-anchor="middle">Standard library only</text>
+    <rect x="252" y="152" width="150" height="30" rx="15" fill="#a78bfa" fill-opacity="0.15" stroke="#a78bfa" stroke-opacity="0.5"/>
+    <text x="327" y="172" text-anchor="middle">Row-swap pivoting</text>
+    <rect x="414" y="152" width="170" height="30" rx="15" fill="#34d399" fill-opacity="0.15" stroke="#34d399" stroke-opacity="0.5"/>
+    <text x="499" y="172" text-anchor="middle">Tested with unittest</text>
+    <rect x="596" y="152" width="150" height="30" rx="15" fill="#fbbf24" fill-opacity="0.15" stroke="#fbbf24" stroke-opacity="0.5"/>
+    <text x="671" y="172" text-anchor="middle">Live web demo</text>
+  </g>
+
+  <!-- pipeline cards -->
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <!-- 1 input -->
+    <rect x="48" y="214" width="262" height="206" rx="14" fill="#0b1220" stroke="#334155"/>
+    <text x="68" y="246" font-size="14" font-weight="600" fill="#38bdf8" letter-spacing="1">1 · READ</text>
+    <text x="68" y="270" font-size="18" font-weight="600" fill="#f1f5f9">input_equations.txt</text>
+    <g font-family="Consolas, Menlo, Courier New, monospace" font-size="17" fill="#cbd5e1">
+      <text x="68" y="318">10x1 + 5x2 = 5</text>
+      <text x="68" y="348">4x2 + 3x3 = 10</text>
+      <text x="68" y="378">x1 + 6x3 = 12</text>
+    </g>
+
+    <!-- 2 parse -->
+    <rect x="352" y="214" width="262" height="206" rx="14" fill="#0b1220" stroke="#334155"/>
+    <text x="372" y="246" font-size="14" font-weight="600" fill="#a78bfa" letter-spacing="1">2 · PARSE</text>
+    <text x="372" y="270" font-size="18" font-weight="600" fill="#f1f5f9">Augmented matrix [A | b]</text>
+    <g font-family="Consolas, Menlo, Courier New, monospace" font-size="17" fill="#cbd5e1">
+      <text x="380" y="318">[ 10   5   0 |  5 ]</text>
+      <text x="380" y="348">[  0   4   3 | 10 ]</text>
+      <text x="380" y="378">[  1   0   6 | 12 ]</text>
+    </g>
+
+    <!-- 3 solve -->
+    <rect x="656" y="214" width="262" height="206" rx="14" fill="#0b1220" stroke="#334155"/>
+    <text x="676" y="246" font-size="14" font-weight="600" fill="#34d399" letter-spacing="1">3 · SOLVE</text>
+    <text x="676" y="270" font-size="18" font-weight="600" fill="#f1f5f9">Gaussian Elimination</text>
+    <g font-family="Consolas, Menlo, Courier New, monospace" font-size="17" fill="#cbd5e1">
+      <text x="684" y="318">[ <tspan fill="#34d399" font-weight="700">■</tspan>  ·  · | · ]</text>
+      <text x="684" y="348">[ 0  <tspan fill="#34d399" font-weight="700">■</tspan>  · | · ]</text>
+      <text x="684" y="378">[ 0  0  <tspan fill="#34d399" font-weight="700">■</tspan> | · ]</text>
+    </g>
+    <text x="676" y="404" font-size="14" fill="#94a3b8">elimination → back substitution</text>
+
+    <!-- 4 output -->
+    <rect x="960" y="214" width="272" height="206" rx="14" fill="#0b1220" stroke="#334155"/>
+    <text x="980" y="246" font-size="14" font-weight="600" fill="#fbbf24" letter-spacing="1">4 · EXPORT</text>
+    <text x="980" y="270" font-size="18" font-weight="600" fill="#f1f5f9">solution.json</text>
+    <g font-family="Consolas, Menlo, Courier New, monospace" font-size="16" fill="#cbd5e1">
+      <text x="980" y="306"><tspan fill="#fbbf24">"status"</tspan>: "SUCCESS",</text>
+      <text x="980" y="332"><tspan fill="#fbbf24">"solution"</tspan>: {</text>
+      <text x="996" y="356">"x1": 0.0, "x2": 1.0,</text>
+      <text x="996" y="380">"x3": 2.0</text>
+      <text x="980" y="404">}</text>
+    </g>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#38bdf8" stroke-width="2.5" fill="none" marker-end="url(#arrow)">
+    <path d="M314 317 H346"/>
+    <path d="M618 317 H650"/>
+    <path d="M922 317 H954"/>
+  </g>
+</svg>
