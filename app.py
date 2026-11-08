@@ -52,4 +52,4 @@ if st.button("Solve"):
         st.table([dict(zip(variables + ["b"], row)) for row in matrix])
 
     st.subheader("JSON output")
-    st.json(result)
+    st.code(json.dumps(result, indent=2), language="json")
