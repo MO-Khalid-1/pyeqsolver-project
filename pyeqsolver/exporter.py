@@ -24,12 +24,12 @@ class JSONExporter:
         }
         self._write(data)
 
-    def save_error(self, error: Exception) -> None:
+    def save_error(self, exc: Exception) -> None:
         """Write an ERROR file with the exception name and message."""
         data = {
             "status": "ERROR",
-            "error_type": type(error).__name__,
-            "message": str(error),
+            "error_type": type(exc).__name__,
+            "message": str(exc),
         }
         self._write(data)
 
