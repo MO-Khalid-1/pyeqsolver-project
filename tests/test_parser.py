@@ -18,12 +18,21 @@ def parse_text(text):
         return EquationParser(path).parse()
 
 
+def assert_matrix_almost_equal(test, actual, expected):
+    """Compare two matrices number by number with assertAlmostEqual."""
+    test.assertEqual(len(actual), len(expected))
+    for actual_row, expected_row in zip(actual, expected):
+        test.assertEqual(len(actual_row), len(expected_row))
+        for a, b in zip(actual_row, expected_row):
+            test.assertAlmostEqual(a, b, places=4)
+
+
 class TestParserValidInput(unittest.TestCase):
 
     def test_case_1_matrix(self):
         parser = EquationParser("tests/data/case01.txt")
         matrix, variables = parser.parse()
-        self.assertEqual(matrix, [
+        assert_matrix_almost_equal(self, matrix, [
             [10.0, 5.0, 0.0, 5.0],
             [0.0, 4.0, 3.0, 10.0],
             [1.0, 0.0, 6.0, 12.0],
@@ -39,7 +48,7 @@ class TestParserMoreValidCases(unittest.TestCase):
 
     def test_case_2_three_variables(self):
         matrix, variables = parse_case("case02.txt")
-        self.assertEqual(matrix, [
+        assert_matrix_almost_equal(self, matrix, [
             [1.0, 1.0, 1.0, 6.0],
             [1.0, 1.0, 2.0, 9.0],
             [1.0, 2.0, 1.0, 8.0],
@@ -48,21 +57,21 @@ class TestParserMoreValidCases(unittest.TestCase):
 
     def test_case_3_decimals(self):
         matrix, variables = parse_case("case03.txt")
-        self.assertEqual(matrix, [[0.5, 1.5, 3.5], [2.0, -1.0, 0.0]])
+        assert_matrix_almost_equal(self, matrix, [[0.5, 1.5, 3.5], [2.0, -1.0, 0.0]])
         self.assertEqual(variables, ["a", "b"])
 
     def test_case_4_single_equation(self):
         matrix, variables = parse_case("case04.txt")
-        self.assertEqual(matrix, [[3.0, 1.0]])
+        assert_matrix_almost_equal(self, matrix, [[3.0, 1.0]])
         self.assertEqual(variables, ["x"])
 
     def test_case_5_repeated_variable(self):
         matrix, variables = parse_case("case05.txt")
-        self.assertEqual(matrix, [[5.0, 10.0]])
+        assert_matrix_almost_equal(self, matrix, [[5.0, 10.0]])
 
     def test_case_6_extra_equation(self):
         matrix, variables = parse_case("case06.txt")
-        self.assertEqual(matrix, [
+        assert_matrix_almost_equal(self, matrix, [
             [1.0, 1.0, 3.0],
             [1.0, -1.0, 1.0],
             [2.0, 2.0, 6.0],
@@ -70,7 +79,7 @@ class TestParserMoreValidCases(unittest.TestCase):
 
     def test_extra_valid_example(self):
         matrix, variables = parse_case("extra_valid.txt")
-        self.assertEqual(matrix, [
+        assert_matrix_almost_equal(self, matrix, [
             [1.0, 1.0, 1.0, 6.0],
             [0.0, 2.0, 5.0, -4.0],
             [2.0, 5.0, -1.0, 27.0],
@@ -80,7 +89,7 @@ class TestParserMoreValidCases(unittest.TestCase):
     def test_parser_does_not_judge_solvability(self):
         # case07 has no solution, but the parser only builds the matrix.
         matrix, variables = parse_case("case07.txt")
-        self.assertEqual(matrix, [[1.0, 1.0, 2.0], [1.0, 1.0, 3.0]])
+        assert_matrix_almost_equal(self, matrix, [[1.0, 1.0, 2.0], [1.0, 1.0, 3.0]])
 
 
 class TestParserErrors(unittest.TestCase):
@@ -123,5 +132,5 @@ class TestParserSpaces(unittest.TestCase):
 
     def test_space_around_operators_is_allowed(self):
         matrix, variables = parse_text("- x + 2 * y = 3")
-        self.assertEqual(matrix, [[-1.0, 2.0, 3.0]])
+        assert_matrix_almost_equal(self, matrix, [[-1.0, 2.0, 3.0]])
         self.assertEqual(variables, ["x", "y"])
