@@ -19,7 +19,8 @@ the same JSON file.
 x1 + 6x3 = 12           ->   x3 = 2.0
 ```
 
-**Live demo:** https://pyeqsolver-project.streamlit.app/
+- **Live demo:** https://pyeqsolver-project.streamlit.app/
+- **Presentation:** [PyEqSolver slides](https://docs.google.com/presentation/d/1bu8Un3oz_as_gTrDaxgrtlk_aMGPBA_fwDTO_vehvxc/view)
 
 ## Contents
 
