@@ -10,7 +10,6 @@ _CONSECUTIVE_OPERATORS_RE = re.compile(r"[+\-]\s*[+\-]")
 _NUMBER_RE = re.compile(r"^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$")
 _SPACE_RE = re.compile(r"\s+")
 _SPLIT_TERM_RE = re.compile(r"[\w.]\s+[\w.]")
-_SPACE_RE = re.compile(r"\s+")
 _TERM_RE = re.compile(
     r"([+\-])((?:\d+(?:\.\d*)?|\.\d+)\*?)?([a-zA-Z_]\w*)"
 )
@@ -104,12 +103,6 @@ class EquationParser:
             raise InvalidFileFormatException(
                 f"Invalid equation at line {line_number}: {line!r}. "
                 "The left-hand side contains invalid characters."
-            )
-
-        if _CONSECUTIVE_OPERATORS_RE.search(left):
-            raise InvalidFileFormatException(
-                f"Invalid equation at line {line_number}: {line!r}. "
-                "Consecutive '+' or '-' operators are not allowed."
             )
 
         if _CONSECUTIVE_OPERATORS_RE.search(left):
