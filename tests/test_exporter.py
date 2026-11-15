@@ -23,7 +23,7 @@ class TestJSONExporter(unittest.TestCase):
     def test_success_file(self):
         exporter = JSONExporter(self.path)
         exporter.save({"x": 1.0, "y": 2.0},
-                      {"num_variables": 2, "num_equations": 2})
+                        {"num_variables": 2, "num_equations": 2})
         self.assertEqual(self.read_json(), {
             "status": "SUCCESS",
             "system_info": {"num_variables": 2, "num_equations": 2},
@@ -32,13 +32,13 @@ class TestJSONExporter(unittest.TestCase):
 
     def test_values_are_rounded_to_4_places(self):
         JSONExporter(self.path).save({"x": 1 / 3, "y": 1.99999999},
-                                     {"num_variables": 2, "num_equations": 2})
+                                        {"num_variables": 2, "num_equations": 2})
         solution = self.read_json()["solution"]
         self.assertEqual(solution, {"x": 0.3333, "y": 2.0})
 
     def test_negative_zero_becomes_zero(self):
         JSONExporter(self.path).save({"x": -0.00001},
-                                     {"num_variables": 1, "num_equations": 1})
+                                        {"num_variables": 1, "num_equations": 1})
         with open(self.path, "r", encoding="utf-8") as file:
             text = file.read()
         self.assertNotIn("-0.0", text)
@@ -55,3 +55,9 @@ class TestJSONExporter(unittest.TestCase):
     def test_error_file_for_missing_input(self):
         JSONExporter(self.path).save_error(FileNotFoundError("missing.txt"))
         self.assertEqual(self.read_json()["error_type"], "FileNotFoundError")
+
+    def test_custom_precision(self):
+        JSONExporter(self.path, precision=6).save(
+            {"x": 1 / 3}, {"num_variables": 1, "num_equations": 1}
+        )
+        self.assertAlmostEqual(self.read_json()["solution"]["x"], 0.333333, places=6)

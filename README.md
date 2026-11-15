@@ -92,7 +92,25 @@ scripts can tell whether the run worked. In PowerShell you can check it with:
     echo $LASTEXITCODE
 
 To solve your own system, edit `data/input_equations.txt` and run
-`py main.py` again.
+`py main.py` again, or point the program at any file with `--input`.
+
+### Command-line options
+
+The program takes optional settings from the command line, using
+`argparse` from the standard library:
+
+    py main.py --input data/sample_no_solution.txt
+    py main.py --input data/my_eqs.txt --output data/results.json --precision 6
+
+| Option | Default | Meaning |
+|---|---|---|
+| `--input` | `data/input_equations.txt` | File with the equations |
+| `--output` | `data/solution.json` | Where to write the JSON result |
+| `--precision` | `4` | Decimal places in the answer |
+
+With no options, `py main.py` works exactly as before. To see all options:
+
+    py main.py --help
 
 ### Use it from your own code
 
@@ -354,13 +372,13 @@ Run all tests from the project folder:
 
     py -m unittest discover -s tests -v
 
-Expected result: `Ran 33 tests ... OK`.
+Expected result: `Ran 34 tests ... OK`.
 
 | File | What it tests |
 |---|---|
 | `tests/test_parser.py` | Building the matrix, variable order, decimals, repeated and missing variables, comments, spacing rules, line numbers and every format error |
 | `tests/test_solver.py` | Unique solutions (including the row swap), the three system errors, that the input matrix is not changed, and `get_metadata()` |
-| `tests/test_exporter.py` | Success and error JSON, rounding to 4 places, `-0.0` clean-up, creating the output folder |
+| `tests/test_exporter.py` | Success and error JSON, rounding to 4 places, a custom precision, `-0.0` clean-up, creating the output folder |
 
 Each test input is a separate file in `tests/data/`. The 13 required cases:
 
@@ -397,10 +415,9 @@ The `data/` folder has one success case and one case for each error type:
 | `data/sample_no_solution.txt` | `InconsistentSystemException` |
 | `data/sample_infinite_solutions.txt` | `InfiniteSolutionsException` |
 
-**On your computer:** copy a sample over the input file and run the program.
+**On your computer:** pass the sample with `--input`.
 
-    Copy-Item data\sample_no_solution.txt data\input_equations.txt
-    py main.py
+    py main.py --input data/sample_no_solution.txt
 
 **On the web:** paste the sample's lines into the text box and click **Solve**.
 
@@ -455,6 +472,6 @@ project itself uses the Python standard library only, and needs no
     │   └── sample_*.txt         one success case and one per error type
     ├── assets/
     │   └── banner.svg           README banner
-    ├── main.py                  command-line entry point
+    ├── main.py                  command-line entry point (--input, --output, --precision)
     ├── app.py                   optional Streamlit demo
     └── README.md

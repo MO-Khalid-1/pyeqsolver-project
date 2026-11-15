@@ -7,9 +7,10 @@ import os
 class JSONExporter:
     """Save solver results as JSON."""
 
-    def __init__(self, output_path: str) -> None:
-        """Store the path of the output file."""
+    def __init__(self, output_path: str, precision: int = 4) -> None:
+        """Store the output path and how many decimals to keep."""
         self.output_path = output_path
+        self.precision = precision
 
     def save(self, solutions: dict[str, float], metadata: dict) -> None:
         """Write a SUCCESS file with the rounded solution."""
@@ -34,8 +35,8 @@ class JSONExporter:
         self._write(data)
 
     def _clean(self, value: float) -> float:
-        """Round to 4 decimals and turn -0.0 into 0.0."""
-        value = round(value, 4)
+        """Round to self.precision decimals and turn -0.0 into 0.0."""
+        value = round(value, self.precision)
         if value == 0:
             return 0.0
         return value
